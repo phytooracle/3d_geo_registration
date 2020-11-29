@@ -14,7 +14,8 @@ RUN apt-get install -y python3.6-dev \
                        libspatialindex-dev \
                        build-essential \
                        software-properties-common \
-                       apt-utils
+                       apt-utils \
+                       libgl1-mesa-dev
 
 RUN add-apt-repository ppa:ubuntugis/ubuntugis-unstable
 RUN apt-get update
