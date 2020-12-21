@@ -111,7 +111,7 @@ def get_meta_info(meta_path):
     x_diff = east_x
 
     x = float(meta['gantry_system_variable_metadata']['position x [m]']) #+ x_diff
-    y = float(meta['gantry_system_variable_metadata']['position y [m]']) + y_diff
+    y = float(meta['gantry_system_variable_metadata']['position y [m]']) + y_diff if scan_dir==1 else float(meta['gantry_system_variable_metadata']['position y [m]']) - y_diff
     z = float(meta['gantry_system_variable_metadata']['position z [m]'])
 
     lat, lon = scanalyzer_to_latlon(x, y)
