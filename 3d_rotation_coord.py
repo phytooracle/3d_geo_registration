@@ -116,7 +116,7 @@ def get_meta_info(meta_path):
 
     lat, lon = scanalyzer_to_latlon(x, y)
 
-    return lat, lon, scan_dir
+    return lat, lon, scan_dir, z
 
 
 # --------------------------------------------------
@@ -138,7 +138,7 @@ def to_utm(end_lat, end_lon):
 
 
 # --------------------------------------------------
-def translate_pcd(rotated_pcd, utm_x, utm_y, scan_dir):
+def translate_pcd(rotated_pcd, utm_x, utm_y, scan_dir, z):
 
     trans_pcd = rotated_pcd.translate([utm_x-0.15, utm_y+0.25, z], relative=False) if scan_dir==0 else rotated_pcd.translate([utm_x+0.15, utm_y+0.25, z], relative=False)
 
@@ -174,12 +174,12 @@ def main():
 
     # Calculate distance traveled and calculate the center point of the scan
     distance = get_distance(rotated_pcd)
-    lat, lon, scan_dir = get_meta_info(args.meta_path)
+    lat, lon, scan_dir, z = get_meta_info(args.meta_path)
     end_lat, end_lon = get_endpoint(lat, lon, 90, distance) if scan_dir==0 else get_endpoint(lat, lon, 270, distance)
     utm_x, utm_y = to_utm(end_lat, end_lon)
 
     # Translate point cloud to center point (UTM)
-    trans_pcd = translate_pcd(rotated_pcd, utm_x, utm_y, scan_dir)
+    trans_pcd = translate_pcd(rotated_pcd, utm_x, utm_y, scan_dir, z)
 
     # Write point cloud to file
     write_pcd(out_path, trans_pcd)
