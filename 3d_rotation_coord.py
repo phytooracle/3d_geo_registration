@@ -140,7 +140,7 @@ def to_utm(end_lat, end_lon):
 # --------------------------------------------------
 def translate_pcd(rotated_pcd, utm_x, utm_y, scan_dir, z):
 
-    trans_pcd = rotated_pcd.translate([utm_x-0.15, utm_y+0.25, z], relative=False) if scan_dir==0 else rotated_pcd.translate([utm_x+0.15, utm_y+0.25, z], relative=False)
+    trans_pcd = rotated_pcd.translate([utm_x-0.15, utm_y+0.25, z], relative=False) #if scan_dir==0 else rotated_pcd.translate([utm_x+0.15, utm_y+0.25, z], relative=False)
 
     return trans_pcd
 
