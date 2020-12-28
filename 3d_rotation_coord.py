@@ -69,15 +69,21 @@ def scale_pcd(pcd):
 
 
 # --------------------------------------------------
-def rotate_pcd(scaled_pcd, rotation_theta):
+def rotate_pcd(scaled_pcd, rotation_theta, z):
 
     theta = np.radians(rotation_theta)
+
+    min_x, min_y, z = scaled_pcd.get_min_bound()
+    max_x, max_y, z = scaled_pcd.get_max_bound()
+    
+    center_x = abs(max_x - min_x)/2
+    center_y = abs(max_y - min_y)/2
 
     rotation_matrix = np.array([[np.cos(theta), -np.sin(theta), 0],
                 [np.sin(theta), np.cos(theta), 0],
                 [0, 0, 1]])
 
-    rotated_pcd = scaled_pcd.rotate(rotation_matrix, center=scaled_pcd.get_center())
+    rotated_pcd = scaled_pcd.rotate(rotation_matrix, center=[center_x, center_y, z])
 
     return rotated_pcd
 
@@ -175,7 +181,7 @@ def main():
     print(f_name)
     # Scale and rotate point cloud
     scaled_pcd = scale_pcd(pcd)
-    rotated_pcd = rotate_pcd(scaled_pcd, rotation_theta)
+    rotated_pcd = rotate_pcd(scaled_pcd, rotation_theta, z)
 
     # Calculate distance traveled and calculate the center point of the scan
     distance = get_distance(rotated_pcd)
