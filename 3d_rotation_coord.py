@@ -161,8 +161,13 @@ def main():
     f_name = os.path.splitext(os.path.basename(args.pcd))[-2] + '_registered.ply'
     out_path = os.path.join(args.outdir, f_name)
 
+    # Create output directory
     if not os.path.isdir(args.outdir):
         os.makedirs(args.outdir)
+
+    # Get metadata
+    lat, lon, scan_dir, z = get_meta_info(args.meta_path)
+    rotation_theta = 90 if scan_dir==0 else 270
 
     # Open point cloud
     pcd = open_pcd(args.pcd)
@@ -170,11 +175,11 @@ def main():
     print(f_name)
     # Scale and rotate point cloud
     scaled_pcd = scale_pcd(pcd)
-    rotated_pcd = rotate_pcd(scaled_pcd, args.rotation_theta)
+    rotated_pcd = rotate_pcd(scaled_pcd, rotation_theta)
 
     # Calculate distance traveled and calculate the center point of the scan
     distance = get_distance(rotated_pcd)
-    lat, lon, scan_dir, z = get_meta_info(args.meta_path)
+
     end_lat, end_lon = get_endpoint(lat, lon, 90, distance) if scan_dir==0 else get_endpoint(lat, lon, 270, distance)
     utm_x, utm_y = to_utm(end_lat, end_lon)
 
