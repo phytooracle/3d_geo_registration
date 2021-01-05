@@ -75,7 +75,7 @@ def rotate_pcd(scaled_pcd, rotation_theta, z):
 
     min_x, min_y, z = scaled_pcd.get_min_bound()
     max_x, max_y, z = scaled_pcd.get_max_bound()
-    
+
     center_x = abs(max_x - min_x)/2
     center_y = abs(max_y - min_y)/2
 
@@ -173,7 +173,7 @@ def main():
 
     # Get metadata
     lat, lon, scan_dir, z = get_meta_info(args.meta_path)
-    rotation_theta = 90 if scan_dir==0 else 270
+    rotation_theta = args.rotation_theta #if scan_dir==0 else 270
 
     # Open point cloud
     pcd = open_pcd(args.pcd)
