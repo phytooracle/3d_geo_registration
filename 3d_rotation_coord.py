@@ -174,7 +174,7 @@ def main():
     # Get metadata
     lat, lon, scan_dir, z = get_meta_info(args.meta_path)
     
-    rotation_theta = args.rotation_theta #if scan_dir==0 else 270
+    rotation_theta = args.rotation_theta if scan_dir==0 else 270
 
     # Open point cloud
     pcd = open_pcd(args.pcd)
