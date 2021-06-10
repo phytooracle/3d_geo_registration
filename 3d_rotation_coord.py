@@ -175,7 +175,7 @@ def main():
     lat, lon, scan_dir, z = get_meta_info(args.meta_path)
     
     # Testing adding varying rotation
-    rotation_theta = args.rotation_theta if scan_dir==0 else 270
+    rotation_theta = args.rotation_theta if scan_dir==1 else 270
 
     # Open point cloud
     pcd = open_pcd(args.pcd)
@@ -188,7 +188,7 @@ def main():
     # Calculate distance traveled and calculate the center point of the scan
     distance = get_distance(rotated_pcd)
 
-    end_lat, end_lon = get_endpoint(lat, lon, 90, distance) if scan_dir==0 else get_endpoint(lat, lon, 270, distance)
+    end_lat, end_lon = get_endpoint(lat, lon, 90, distance) if scan_dir==1 else get_endpoint(lat, lon, 270, distance)
     utm_x, utm_y = to_utm(end_lat, end_lon)
 
     # Translate point cloud to center point (UTM)
